@@ -3,7 +3,7 @@ const router = express.Router();
 const { celebrate: validate } = require("celebrate");
 const controller = require("../../controllers/users.controller");
 const { getAllUsers } = require("../../validations/v1/user.validations");
-// const { authorize } = require("../../middlewares/auth");
+const { authorize } = require("../../middlewares/auth");
 
 router
   .route("/getAllUsers")
@@ -17,6 +17,6 @@ router
    *
    * @apiSuccess {Object} Status, message, data
    */
-  .get(controller.listAllUsers);
+  .get(validate(getAllUsers, { allowUnknown: false }), controller.listAllUsers);
 
 module.exports = router;
