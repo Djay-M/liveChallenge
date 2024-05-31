@@ -1,5 +1,6 @@
 const express = require("express");
 const UserRoute = require("./users.route");
+const UrlRoute = require("./url.route");
 const router = express.Router();
 
 // Health Check API
@@ -8,5 +9,6 @@ router.get("/status", function (req, res, next) {
 });
 
 router.use("/users", UserRoute);
+router.use("/url", UrlRoute);
 
 module.exports = router;

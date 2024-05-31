@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
-  const Users = sequelize.define(
-    "Users",
+  const Url = sequelize.define(
+    "Url",
     {
       id: {
         allowNull: false,
@@ -8,19 +8,14 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-      firstName: {
-        type: DataTypes.STRING,
-      },
-      lastName: {
-        allowNull: true,
-        type: DataTypes.STRING,
-      },
-      username: {
+      userId: {
         allowNull: false,
+        type: DataTypes.INTEGER,
+      },
+      originalUrl: {
         type: DataTypes.STRING,
       },
-      password: {
-        allowNull: false,
+      encodeUrl: {
         type: DataTypes.STRING,
       },
       archived: {
@@ -40,14 +35,14 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     {
-      tableName: "Users",
+      tableName: "Url",
       timestamps: false,
     }
   );
-  Users.associate = (models) => {
-    Users.hasMany(models.Url, {
+  Url.associate = (models) => {
+    Url.belongsTo(models.Users, {
       foreignKey: "userId",
     });
   };
-  return Users;
+  return Url;
 };

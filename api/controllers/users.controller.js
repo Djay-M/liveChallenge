@@ -16,3 +16,26 @@ exports.listAllUsers = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.createUser = async (req, res, next) => {
+  try {
+    await Users.create(req.body);
+    const user = await Users.findOne({
+      where: {
+        username: req.body.username,
+        password: req.body.password,
+      },
+      raw: true,
+    });
+    const JwtToken = genrateJwt(user);
+    return res.json({
+      status: 200,
+      message: "User created SuccessFully",
+      token: `JWT ${JwtToken}`,
+      body: req.body,
+    });
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
+};
